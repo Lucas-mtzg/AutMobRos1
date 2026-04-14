@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     eeros::logger::Logger log = eeros::logger::Logger::getLogger();
 
     log.info() << "Starting template project...";
-    log.info() << "Hello ERROS";
+    log.info() << "Hello ERROS 1";
 
     // log.info() << "Initializing hardware...";
     // eeros::hal::HAL& hal = eeros::hal::HAL::instance();
