@@ -8,6 +8,7 @@
 #include <eeros/control/PeripheralInput.hpp>
 #include <eeros/control/SignalChecker.hpp>
 #include "customBlocks/arcsinus.hpp"
+#include <eeros/control/PeripheralOutput.hpp>
 
 using namespace eeros::control;
 
@@ -19,8 +20,10 @@ public:
     // Define Blocks
     PeripheralInput<> q1;
     Gain<> g;
-    SignalChecker<> signalchecker;
     arcsinus<> arcsinus_block;
+    PeripheralOutput<> motor;
+    Constant<> motorVoltageSetpoint;
+
     TimeDomain timedomain;
 };
 

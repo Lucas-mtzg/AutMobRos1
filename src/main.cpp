@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     hal.readConfigFromFile(&argc, argv);
 
     log.info() << "Initializing control system...";
-    ControlSystem cs(dt);
+    ControlSystem cs(0.1);
 
     log.info() << "Initializing safety system...";
     MyRobotSafetyProperties sp(cs, dt);
