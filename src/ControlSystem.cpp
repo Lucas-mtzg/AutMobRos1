@@ -6,7 +6,8 @@ ControlSystem::ControlSystem(double dt)
       q1("quat1"),
       arcsinus_block(),
       motor("motor1"),
-      motorVoltageSetpoint(0.0)
+      motorVoltageSetpoint(0.0),
+      E2("enc1")
 {
     // Name all blocks
     g.setName("g");
@@ -14,12 +15,14 @@ ControlSystem::ControlSystem(double dt)
     arcsinus_block.setName("arcsinus");
     motorVoltageSetpoint.setName("motorVoltageSetpoint");
     motor.setName("motor");
+    E2.setName("encoder 1");
 
     // Name all signals
     q1.getOut().getSignal().setName("sin(alpha/2)");     // q1 is alpha/2, that's why we multiply it with a gain of 2 to get alpha
     g.getOut().getSignal().setName("alpha");
     arcsinus_block.getOut().getSignal().setName("alpha/2");
     motorVoltageSetpoint.getOut().getSignal().setName("Motor voltage setpoint [V]");
+    E2.getOut().getSignal().setName("Encoder 2 [rad]");
 
     // Connect signals
     arcsinus_block.getIn().connect(q1.getOut());              // output of Gain g block is input of the arcsinus block
@@ -32,6 +35,7 @@ ControlSystem::ControlSystem(double dt)
     timedomain.addBlock(g);
     timedomain.addBlock(motorVoltageSetpoint);
     timedomain.addBlock(motor);
+    timedomain.addBlock(E2);
 
     // Add timedomain to executor
     eeros::Executor::instance().add(timedomain);

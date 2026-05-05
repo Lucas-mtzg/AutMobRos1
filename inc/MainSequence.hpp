@@ -41,6 +41,7 @@ public:
             setMotorVoltage(-0.5);
             sleep(2.0);
             setMotorVoltage(0.5);
+            log.info() << "Encoder value is " << cs.E2.getOut().getSignal() << " rad.";
             sleep(2.0);
         }
         return 0;

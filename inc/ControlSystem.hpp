@@ -23,6 +23,7 @@ public:
     arcsinus<> arcsinus_block;
     PeripheralOutput<> motor;
     Constant<> motorVoltageSetpoint;
+    PeripheralInput<> E2;               //Encoder 2
 
     TimeDomain timedomain;
 };
