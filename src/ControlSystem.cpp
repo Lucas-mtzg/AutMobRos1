@@ -1,23 +1,33 @@
 #include "ControlSystem.hpp"
 
 ControlSystem::ControlSystem(double dt)
-    : myConstant(1.0), myGain(2.0),
-      timedomain("Main time domain", dt, true)
+    : g(2.0),
+      timedomain("Main time domain", dt, true),
+      q1("quat1"),
+      signalchecker(-0.2, 0.2),
+      arcsinus_block()
 {
     // Name all blocks
-    myConstant.setName("My constant");
-    myGain.setName("My gain");
+    g.setName("g");
+    q1.setName("quaternion 1");
+    signalchecker.setName("signal checker");
+    arcsinus_block.setName("arcsinus");
 
     // Name all signals
-    myConstant.getOut().getSignal().setName("My constant value");
-    myGain.getOut().getSignal().setName("My constant value multiplied with my gain");
+    q1.getOut().getSignal().setName("sin(alpha/2)");     // q1 is alpha/2, that's why we multiply it with a gain of 2 to get alpha
+    g.getOut().getSignal().setName("alpha");
+    arcsinus_block.getOut().getSignal().setName("alpha/2");
 
     // Connect signals
-    myGain.getIn().connect(myConstant.getOut());
+    arcsinus_block.getIn().connect(q1.getOut());              // output of Gain g block is input of the arcsinus block
+    g.getIn().connect(arcsinus_block.getOut());                 //q1 is input of the Gain g block
+    signalchecker.getIn().connect(g.getOut());      // output of Gain g block is input of the signalchecker 
 
     // Add blocks to timedomain
-    timedomain.addBlock(myConstant);
-    timedomain.addBlock(myGain);
+    timedomain.addBlock(q1);
+    timedomain.addBlock(arcsinus_block);
+    timedomain.addBlock(g);
+    timedomain.addBlock(signalchecker);
 
     // Add timedomain to executor
     eeros::Executor::instance().add(timedomain);
