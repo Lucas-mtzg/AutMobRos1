@@ -31,6 +31,7 @@ public:
         while (eeros::sequencer::Sequencer::running)
         {
             log.info() << "Encoder value is " << cs.E2.getOut().getSignal() << " rad.";
+            log.info() << cs.qdMax.getOut().getSignal();
             
         }
         return 0;
