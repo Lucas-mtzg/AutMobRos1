@@ -16,16 +16,15 @@ void signalHandler(int signum)
 
 int main(int argc, char **argv)
 {
-    const double dt = 0.001;
+    const double dt = 0.005;
     eeros::logger::Logger::setDefaultStreamLogger(std::cout);
     eeros::logger::Logger log = eeros::logger::Logger::getLogger();
 
-    log.info() << "Starting template project...";
-    log.info() << "Hello ERROS 1";
+    log.info() << "Starting controller...";
 
-    // log.info() << "Initializing hardware...";
-    // eeros::hal::HAL& hal = eeros::hal::HAL::instance();
-    // hal.readConfigFromFile(&argc, argv);
+    log.info() << "Initializing hardware...";
+    eeros::hal::HAL& hal = eeros::hal::HAL::instance();
+    hal.readConfigFromFile(&argc, argv);
 
     log.info() << "Initializing control system...";
     ControlSystem cs(dt);
@@ -33,7 +32,7 @@ int main(int argc, char **argv)
     log.info() << "Initializing safety system...";
     MyRobotSafetyProperties sp(cs, dt);
     eeros::safety::SafetySystem ss(sp, dt);
-    cs.timedomain.registerSafetyEvent(ss, sp.doSystemOff); // fired if timedomain fails to run properly
+    cs.timedomain.registerSafetyEvent(ss, sp.abort); // fired if timedomain fails to run properly
     signal(SIGINT, signalHandler);
 
     log.info() << "Initializing sequencer...";
