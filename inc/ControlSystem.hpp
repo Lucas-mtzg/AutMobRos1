@@ -8,6 +8,8 @@
 #include "customBlocks/FwKinOdom.hpp"
 #include <eeros/control/DeMux.hpp>
 #include <eeros/control/TimeDomain.hpp>
+#include <eeros/control/Constant.hpp>
+#include "customBlocks/InvKin.hpp"
 
 using namespace eeros::control;
 
@@ -21,6 +23,9 @@ public:
     Mux<2> E;
     D<eeros::math::Vector2> Ed;
     FwKinOdom fwKinOdom;
+
+    Constant<> RvRx, omegaR;
+    InvKin invKin;
 
     TimeDomain timedomain;
 };
