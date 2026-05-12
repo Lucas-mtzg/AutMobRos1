@@ -37,8 +37,6 @@ public:
     Gain<> R;                          // Resistance of the motor, to convert current in A to a voltage in V           
     PeripheralOutput<> M1;             // Motor 1
 
-
-
     TimeDomain timedomain;
 };
 
