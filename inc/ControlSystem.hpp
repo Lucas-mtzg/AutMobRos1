@@ -32,6 +32,13 @@ public:
     Gain<> R;
     PeripheralOutput<> M1;
 
+    // Blocks for the velocity 
+    D<> qd1;
+    Gain<> i;
+    Gain<> kM;
+    Saturation<> qdMax;
+    Sum<> U1;
+
     TimeDomain timedomain;
 };
 
